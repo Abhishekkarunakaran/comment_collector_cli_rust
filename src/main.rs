@@ -3,6 +3,7 @@ use std::env;
 use std::fs::File;
 use std::io::{self, BufRead};
 use regex::Regex;
+mod data;
 
 fn main() {
 
@@ -12,7 +13,7 @@ fn main() {
     
     let file_path = &args[1];
     let file = File::open(file_path).expect("Error in file reading");
-    let reader = io::BufReader::new(file);
+    let reader = io::BufReader::new(&file);
 
     let mut line_number = 1;
 
@@ -29,6 +30,13 @@ fn main() {
     // let contents= fs::read_file_lines(file_path).expect("Error");
     // print!("{:?}",file);
 
+    drop(file);
 
+    let data = crate::data::get_data();
+
+    for datum in data{
+        dbg!(datum.single);
+    }
+    // print!("{:#?}\n",data);
 
 }
